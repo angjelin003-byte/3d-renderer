@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.app" // Update this to match your package
+    namespace = "com.editor"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.app" // Update this to match your package
+        applicationId = "com.editor"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -54,7 +54,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     
-    // Jetpack Compose BOM (Bill of Materials)
+    // Jetpack Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
