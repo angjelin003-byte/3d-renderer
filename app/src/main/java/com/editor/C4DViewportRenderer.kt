@@ -4,6 +4,20 @@ import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.nio.FloatBuffer
+
+fun createFloatBuffer(array: FloatArray): FloatBuffer {
+    // 4 bytes per float
+    val buffer = ByteBuffer.allocateDirect(array.size * 4).run {
+        order(ByteOrder.nativeOrder())
+        asFloatBuffer()
+    }
+    buffer.put(array)
+    buffer.position(0)
+    return buffer
+}
 
 class C4DViewportRenderer : GLSurfaceView.Renderer {
 
