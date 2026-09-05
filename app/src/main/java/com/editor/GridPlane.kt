@@ -12,7 +12,6 @@ class GridPlane {
     private var vertexCount = 0
     val modelMatrix = FloatArray(16)
 
-    // Flat shader just for grid lines
     private val vertexShaderCode = """
         uniform mat4 u_MVPMatrix;
         attribute vec4 a_Position;
@@ -24,7 +23,6 @@ class GridPlane {
     private val fragmentShaderCode = """
         precision mediump float;
         void main() {
-            // Half-transparent dark grey line
             gl_FragColor = vec4(0.4, 0.4, 0.4, 0.5); 
         }
     """
@@ -32,14 +30,11 @@ class GridPlane {
     init {
         Matrix.setIdentityM(modelMatrix, 0)
         
-        // Generate a 20x20 grid (-10 to 10)
         val vertices = mutableListOf<Float>()
         val size = 10
         for (i in -size..size) {
-            // Lines parallel to Z axis
             vertices.addAll(listOf(i.toFloat(), 0f, -size.toFloat()))
             vertices.addAll(listOf(i.toFloat(), 0f, size.toFloat()))
-            // Lines parallel to X axis
             vertices.addAll(listOf(-size.toFloat(), 0f, i.toFloat()))
             vertices.addAll(listOf(size.toFloat(), 0f, i.toFloat()))
         }
@@ -70,7 +65,6 @@ class GridPlane {
     fun draw(camera: Camera) {
         GLES20.glUseProgram(shaderProgram)
         
-        // Enable blending for the transparency
         GLES20.glEnable(GLES20.GL_BLEND)
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA)
 
@@ -83,7 +77,6 @@ class GridPlane {
         GLES20.glEnableVertexAttribArray(posHandle)
         GLES20.glVertexAttribPointer(posHandle, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer)
 
-        // Draw as lines, not triangles
         GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount)
 
         GLES20.glDisableVertexAttribArray(posHandle)
